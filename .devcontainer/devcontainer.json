@@ -1,23 +1,50 @@
 {
   "name": "Isaac Pod Development",
-  "image": "stickyburn/isaac-pod:latest",
+  "build": {
+    "dockerfile": "../../isaac-pod/Dockerfile.dev",
+    "context": "../../isaac-pod"
+  },
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "runArgs": [
-    "--platform=linux/amd64"
-  ],
-   "customizations": {
-     "vscode": {
-       "settings": {
-         "python.analysis.exclude": [
-           "**/site-packages"
-         ]
-       },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.analysis.exclude": [
+          "**/site-packages"
+        ],
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "ruff.enable": true,
+        "ruff.organizeImports": true,
+        "ruff.fixAll": true,
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
+          "source.fixAll": "explicit"
+        },
+        "basedpyright.analysis.typeCheckingMode": "basic",
+        "basedpyright.analysis.diagnosticMode": "workspace",
+        "basedpyright.analysis.logLevel": "Information",
+        "basedpyright.analysis.autoImportCompletions": true,
+        "basedpyright.analysis.extraPaths": [
+          "/workspace/piper_sim",
+          "/opt/IsaacLab/source/isaaclab"
+        ],
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/.ruff_cache": true,
+          "**/*.egg-info": true,
+          "**/build": true,
+          "**/dist": true
+        }
+      },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
+        "charliermarsh.ruff"
       ]
     }
   },
-  "remoteUser": "root"
+  "remoteUser": "root",
+  "postCreateCommand": "pip install --upgrade ruff"
 }

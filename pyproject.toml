@@ -1,16 +1,150 @@
-[tool.pyright]
-venv = "isaaclab-env"
-useLibraryCodeForTypes = true
-extraPaths = [
-  "/opt/IsaacLab/source/isaaclab",
-  "/opt/IsaacLab/source/isaaclab_assets",
-  "/opt/IsaacLab/source/isaaclab_mimic",
-  "/opt/IsaacLab/source/isaaclab_rl",
-  "/opt/IsaacLab/source/isaaclab_tasks"
+[project]
+name = "piper-sim"
+version = "0.1.0"
+description = "Piper Arm Simulation with Newton Physics - IsaacLab extension"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "BSD-3-Clause"}
+keywords = ["robotics", "simulation", "isaaclab", "newton", "piper"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.3.0",
+    "basedpyright>=1.12.0",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+indent-width = 4
+
+# Exclude directories
 exclude = [
-  "**/site-packages",
-  "**/node_modules",
-  ".git",
-  "**/__pycache__",
+    "_isaac_sim",
+    ".git",
+    ".ruff_cache",
+    ".vscode",
+    "__pycache__",
+    "docs",
+    "logs",
+    "build",
+    "dist",
+    "*.egg-info",
 ]
+
+[tool.ruff.lint]
+# Enable all rules by default, then selectively ignore
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "D",   # pydocstyle
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "RUF", # Ruff-specific rules
+]
+
+# Match IsaacLab's flake8 ignore list (W503 removed as it's deprecated in ruff)
+ignore = [
+    "E402",     # Module level import not at top of file
+    "E501",     # Line too long (handled by formatter)
+    "E203",     # Whitespace before ':' (conflicts with black)
+    "D401",     # First line should be in imperative mood
+    "RUF012",   # Mutable class variables should be annotated with typing.ClassVar
+    "SIM102",   # Use a single if-statement instead of nested if-statements
+    "SIM117",   # Merge with statements for context managers that have same scope
+    "SIM118",   # Checks for key-existence checks against dict.keys() calls
+    "RUF013",   # Implicit Optional (too strict for this codebase)
+]
+
+# Allow unused imports in __init__.py files
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Unused imports
+
+# Google docstring convention
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+# Allow unused arguments in certain contexts
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["*MDP*", "*Cfg"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 120
+
+[tool.ruff.lint.isort]
+known-first-party = ["piper_sim", "isaaclab", "isaaclab_newton"]
+known-third-party = [
+    "isaacsim.core.api",
+    "isaacsim.replicator.common",
+    "omni.replicator.core",
+    "pxr",
+    "omni.kit",
+    "carb",
+    "warp",
+    "numpy",
+    "torch",
+    "gymnasium",
+    "newton",
+    "mujoco",
+    "rerun",
+]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+combine-as-imports = true
+split-on-trailing-comma = true
+lines-after-imports = 2
+
+[tool.basedpyright]
+include = ["piper_sim"]
+exclude = [
+    "**/__pycache__",
+    "**/_isaac_sim",
+    "**/docs",
+    "**/logs",
+    ".git",
+    ".vscode",
+    ".ruff_cache",
+    "**/build",
+    "**/dist",
+    "**/*.egg-info",
+]
+
+typeCheckingMode = "basic"
+pythonVersion = "3.11"
+pythonPlatform = "Linux"
+enableTypeIgnoreComments = true
+
+# Ignore missing imports (CI/pre-commit may not have all deps installed)
+reportMissingImports = "none"
+reportMissingModuleSource = "none"
+
+# Specific error reporting settings
+reportGeneralTypeIssues = "none"       # Too strict for existing code
+reportOptionalMemberAccess = "warning"
+reportPrivateUsage = "warning"
+reportUnusedImport = "warning"
+reportUnusedVariable = "warning"
+
+[tool.codespell]
+skip = "*.usd,*.svg,*.png,_isaac_sim*,*.bib,*.css,*/_build"
+quiet-level = 0
+ignore-words-list = "haa,slq,collapsable,buss"

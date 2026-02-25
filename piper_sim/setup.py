@@ -1,4 +1,4 @@
-"""Setup script for piper_sim extension."""
+"""Install the Piper Sim extension."""
 
 import os
 
@@ -6,10 +6,9 @@ import toml
 from setuptools import setup
 
 
-# Get the extension directory
+# install the extension
 EXTENSION_PATH = os.path.dirname(os.path.realpath(__file__))
 
-# Load the extension.toml file
 EXTENSION_TOML_DATA = toml.load(os.path.join(EXTENSION_PATH, "source/piper_sim/config", "extension.toml"))
 
 INSTALL_REQUIRES = [
@@ -27,7 +26,6 @@ INSTALL_REQUIRES = [
     "rerun-sdk",
 ]
 
-# Extra dependencies for development and testing
 EXTRAS_REQUIRE = {
     "dev": [
         "pytest>=7.0",

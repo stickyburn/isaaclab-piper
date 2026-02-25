@@ -1,4 +1,4 @@
-"""Piper environment configuration with Newton physics."""
+"""Piper environment cfg with Newton."""
 
 import isaaclab.envs.mdp as mdp
 import isaaclab.sim as sim_utils
@@ -28,7 +28,7 @@ from piper_sim.assets.piper_cfg import (
 
 
 ##
-# Scene Configuration
+# Scene
 ##
 
 
@@ -36,26 +36,20 @@ from piper_sim.assets.piper_cfg import (
 class PiperSceneCfg(InteractiveSceneCfg):
     """Configuration for shelving simulation."""
 
-    # Ground plane
     ground = AssetBaseCfg(
         prim_path="/World/ground",
         spawn=sim_utils.GroundPlaneCfg(),
         init_state=AssetBaseCfg.InitialStateCfg(pos=(0.0, 0.0, -1.05)),
     )
 
-    # Table for robot placement
     table = get_table_cfg()
 
-    # Shelf for target placement
     shelf = get_shelf_cfg()
 
-    # Robot arm
     robot: ArticulationCfg = PIPER_ARM_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
 
-    # Object on table
     prop: RigidObjectCfg = get_random_prop_cfg()
 
-    # Lights
     light = AssetBaseCfg(
         prim_path="/World/light",
         spawn=sim_utils.DomeLightCfg(color=(0.75, 0.75, 0.75), intensity=2500.0),
@@ -63,7 +57,7 @@ class PiperSceneCfg(InteractiveSceneCfg):
 
 
 ##
-# Actions Configuration
+# Actions
 ##
 
 
@@ -81,7 +75,7 @@ class ActionsCfg:
 
 
 ##
-# Observations Configuration
+# Observations
 ##
 
 
@@ -109,7 +103,7 @@ class ObservationsCfg:
 
 
 ##
-# Events Configuration
+# Events
 ##
 
 
@@ -128,7 +122,7 @@ class EventsCfg:
 
 
 ##
-# Rewards Configuration
+# Rewards
 ##
 
 
@@ -146,7 +140,7 @@ class RewardsCfg:
 
 
 ##
-# Terminations Configuration
+# Terminations
 ##
 
 
@@ -159,7 +153,7 @@ class TerminationsCfg:
 
 
 ##
-# Environment Configuration
+# Configuration
 ##
 
 
@@ -167,10 +161,9 @@ class TerminationsCfg:
 class PiperEnvCfg(ManagerBasedRLEnvCfg):
     """Configuration for the Piper environment with Newton physics."""
 
-    # Scene settings
+    # for now just 1 env
     scene: PiperSceneCfg = PiperSceneCfg(num_envs=1, env_spacing=2.5)
 
-    # Basic settings
     observations: ObservationsCfg = ObservationsCfg()
     actions: ActionsCfg = ActionsCfg()
 
@@ -179,7 +172,7 @@ class PiperEnvCfg(ManagerBasedRLEnvCfg):
     terminations: TerminationsCfg = TerminationsCfg()
     events: EventsCfg = EventsCfg()
 
-    # Simulation settings with Newton physics
+    # attach newton warp
     sim: SimulationCfg = SimulationCfg(
         dt=1.0 / 60.0,
         render_interval=2,
@@ -201,7 +194,6 @@ class PiperEnvCfg(ManagerBasedRLEnvCfg):
 
     def __post_init__(self):
         """Post initialization."""
-        # General settings
         self.decimation = 2
         self.episode_length_s = 20.0
         self.viewer.eye = (2.0, 2.0, 2.0)
@@ -216,9 +208,7 @@ class PiperEnvCfg_PLAY(PiperEnvCfg):
         """Post initialization."""
         super().__post_init__()
 
-        # Smaller scene for visualization
         self.scene.num_envs = 1
         self.scene.env_spacing = 2.5
 
-        # Disable observation corruption
         self.observations.policy.enable_corruption = False

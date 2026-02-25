@@ -1,9 +1,8 @@
 [package]
 version = "0.1.0"
-title = "Piper sim with newton"
-description = "Isaac Lab extension for Piper arm simulation"
+title = "Piper shelf simulation with newton and isaaclab"
+description = "Isaac Lab extension for Piper shelf simulation"
 repository = "https://github.com/stickyburn/isaac-projects"
-category = "robotics"
 
 [python.pipapi]
 requirements = [
@@ -21,7 +20,7 @@ requirements = [
 
 modules = [
     "isaaclab",
-    "isaaclab_newton", 
+    "isaaclab_newton",
     "numpy",
     "torch",
     "gymnasium",

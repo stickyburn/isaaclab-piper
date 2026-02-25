@@ -1,4 +1,4 @@
-"""Configuration for Piper robot arm assets."""
+"""Configuration for Piper arm."""
 
 import os
 
@@ -7,7 +7,7 @@ from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets import ArticulationCfg
 
 
-# Get the path to the assets directory
+# TODO: dynamic path
 ASSETS_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
     "..",
@@ -17,20 +17,11 @@ ASSETS_DIR = os.path.join(
 )
 PIPER_USD_PATH = os.path.join(ASSETS_DIR, "piper_usd", "piper.usd")
 
-# Get Props directory for downloadable assets
 PROPS_DIR = os.path.join(ASSETS_DIR, "Props")
 
 
 def get_props_usd_path(prop_name: str) -> str:
-    """Get the path to a prop USD file.
-
-    Args:
-        prop_name: Name of the prop (e.g., "Box", "Container")
-
-    Returns:
-        Path to the USD file
-    """
-    # Check various possible locations
+    """Get the path to a prop USD file."""
     possible_paths = [
         os.path.join(PROPS_DIR, f"{prop_name}.usd"),
         os.path.join(PROPS_DIR, prop_name, f"{prop_name}.usd"),
@@ -41,7 +32,7 @@ def get_props_usd_path(prop_name: str) -> str:
         if os.path.exists(path):
             return path
 
-    # Return the first path even if it doesn't exist (will fail later with clear error)
+    # let it fail here, catching it later with proper errors
     return possible_paths[0]
 
 
@@ -55,10 +46,10 @@ PIPER_ARM_CFG = ArticulationCfg(
         activate_contact_sensors=True,
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        pos=(0.0, 0.0, 0.8),  # Positioned on top of table
+        pos=(0.0, 0.0, 0.8),  # on top of table
         rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotation
         joint_pos={
-            # Default joint positions - adjust based on actual USD
+            # TODO: adjust based on actual USD
             "joint1": 0.0,
             "joint2": 0.0,
             "joint3": 0.0,
@@ -84,18 +75,14 @@ PIPER_ARM_CFG = ArticulationCfg(
 ##
 
 
-# Table - Using primitive cuboid
 def get_table_cfg():
-    """Get table configuration as a rigid object.
-
-    Table dimensions: 1.0m x 0.6m x 0.8m (height)
-    """
+    """Get table configuration as a rigid object."""
     from isaaclab.assets import RigidObjectCfg
 
     return RigidObjectCfg(
         prim_path="{ENV_REGEX_NS}/Table",
         spawn=sim_utils.CuboidCfg(
-            size=(1.0, 0.6, 0.05),  # Thin top surface
+            size=(1.0, 0.6, 0.05),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 disable_gravity=False,
                 linear_damping=0.0,
@@ -106,27 +93,23 @@ def get_table_cfg():
                 collision_enabled=True,
             ),
             visual_material=sim_utils.PreviewSurfaceCfg(
-                diffuse_color=(0.4, 0.25, 0.1),  # Wood-like color
+                diffuse_color=(0.4, 0.25, 0.1),
             ),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.775),  # Half height of table
+            pos=(0.0, 0.0, 0.775),
         ),
     )
 
 
-# Shelf - Using primitive cuboid
 def get_shelf_cfg():
-    """Get shelf configuration as a rigid object.
-
-    Shelf dimensions: 1.0m x 0.4m x 1.5m (height)
-    """
+    """Get shelf configuration as a rigid object."""
     from isaaclab.assets import RigidObjectCfg
 
     return RigidObjectCfg(
         prim_path="{ENV_REGEX_NS}/Shelf",
         spawn=sim_utils.CuboidCfg(
-            size=(1.0, 0.4, 0.05),  # Thin shelf surface at specified height
+            size=(1.0, 0.4, 0.05),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 disable_gravity=False,
             ),
@@ -135,18 +118,17 @@ def get_shelf_cfg():
                 collision_enabled=True,
             ),
             visual_material=sim_utils.PreviewSurfaceCfg(
-                diffuse_color=(0.7, 0.7, 0.7),  # Metal-like color
+                diffuse_color=(0.7, 0.7, 0.7),
             ),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
-            pos=(0.0, -0.5, 1.5),  # Position behind table
+            pos=(0.0, -0.5, 1.5),
         ),
     )
 
 
-# Box prop
 def get_box_cfg():
-    """Get box prop configuration."""
+    """Get box configuration."""
     from isaaclab.assets import RigidObjectCfg
 
     return RigidObjectCfg(
@@ -158,14 +140,13 @@ def get_box_cfg():
             ),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.825),  # On top of table
+            pos=(0.0, 0.0, 0.825),
         ),
     )
 
 
-# Container prop
 def get_container_cfg():
-    """Get container prop configuration."""
+    """Get container configuration."""
     from isaaclab.assets import RigidObjectCfg
 
     return RigidObjectCfg(
@@ -177,27 +158,19 @@ def get_container_cfg():
             ),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.825),  # On top of table
+            pos=(0.0, 0.0, 0.825),
         ),
     )
 
 
-# List of available props
 AVAILABLE_PROPS = {
     "Box": get_box_cfg,
     "Container": get_container_cfg,
 }
 
 
-def get_random_prop_cfg(seed: int = None):
-    """Get a random prop configuration.
-
-    Args:
-        seed: Random seed for reproducibility
-
-    Returns:
-        RigidObjectCfg for a random prop
-    """
+def get_random_prop_cfg(seed: int | None = None):
+    """Get a random prop configuration."""
     import random
 
     if seed is not None:

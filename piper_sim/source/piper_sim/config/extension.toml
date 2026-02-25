@@ -3,14 +3,15 @@ version = "0.1.0"
 title = "Piper shelf simulation with newton and isaaclab"
 description = "Isaac Lab extension for Piper shelf simulation"
 repository = "https://github.com/stickyburn/isaac-projects"
+keywords = ["robotics", "simulation", "piper", "isaaclab"]
 
 [python.pipapi]
 requirements = [
     "isaaclab",
     "isaaclab_newton",
-    "numpy>=2",
-    "torch>=2.7",
-    "gymnasium>=1.2.0",
+    "numpy",
+    "torch",
+    "gymnasium>=0.29.0",
     "prettytable>=3.3.0",
     "warp-lang>=1.0.0",
     "newton",

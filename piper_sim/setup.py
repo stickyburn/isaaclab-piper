@@ -52,4 +52,10 @@ setup(
     package_dir={"piper_sim": "source/piper_sim"},
     include_package_data=True,
     zip_safe=False,
+    entry_points={
+        "gymnasium.envs": [
+            "Piper-Shelf-v0 = piper_sim.envs:PiperEnv",
+            "Piper-Shelf-Play-v0 = piper_sim.envs:PiperEnvPlay",
+        ]
+    },
 )

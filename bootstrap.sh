@@ -2,24 +2,22 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_SOURCE="${REPO_ROOT}/projects/shelf_sim/source/shelf_sim"
+PROJECT_SOURCE="${REPO_ROOT}/piper_sim/source/piper_sim"
 
-# Configurable constants (edit here when needed).
-# Assets are stored in the extension's data directory (gitignored)
-ASSETS_DIR="${PROJECT_SOURCE}/shelf_sim/data/Props"
-DOWNLOADS_DIR="/tmp/shelf_sim_downloads"
+ASSETS_DIR="${REPO_ROOT}/assets/props"
+DOWNLOADS_DIR="/tmp/piper_sim_downloads"
 ASSETS_ZIP_URL="https://drive.google.com/uc?id=13GMQuDB87-cP5kB_MRCS5-M5Nnid1Tkq"
-ASSETS_ZIP_NAME="shelf_sim_assets.zip"
+ASSETS_ZIP_NAME="piper_sim_assets.zip"
 
 echo "Repo root: ${REPO_ROOT}"
 
+# check IsaacLab
 if ! python - <<'PY'
 import importlib.util
 raise SystemExit(0 if importlib.util.find_spec("isaaclab") else 1)
 PY
 then
   if [[ -f "/opt/isaaclab-env/bin/activate" ]]; then
-    # shellcheck disable=SC1091
     source "/opt/isaaclab-env/bin/activate"
     echo "Activated Isaac Lab venv."
   else
@@ -28,10 +26,10 @@ then
   fi
 fi
 
-echo "Installing shelf_sim as an Isaac Lab extension (editable)."
-python -m pip install -e "${PROJECT_SOURCE}"
+echo "Installing piper_sim as an Isaac Lab extension (editable)."
+python -m pip install -e "${REPO_ROOT}/piper_sim"
 
-# Create data directory for assets
+# create dirs
 mkdir -p "${ASSETS_DIR}"
 mkdir -p "${DOWNLOADS_DIR}"
 
@@ -48,16 +46,20 @@ download_and_extract() {
   rm -f "${zip_path}"
 }
 
+# gdown for drive
 python -m pip install gdown
 
 download_and_extract "${ASSETS_ZIP_URL}"
 
-# Remove temporary downloads directory
 rm -rf "${DOWNLOADS_DIR}" 2>/dev/null || true
 
-# Remove macOS metadata files
-find "${ASSETS_DIR}" -name "__MACOSX" -type d -exec rm -rf {} + 2>/dev/null || true
-
+echo ""
+echo "✓ Setup complete!"
+echo ""
 echo "Assets installed to: ${ASSETS_DIR}"
-echo "You can now reference them using:"
-echo "  from shelf_sim import MUSTARD_JAR_USD_PATH, OIL_TIN_USD_PATH, etc."
+echo ""
+echo "You can now:"
+echo "  1. Visualize the scene:   python piper_sim/scripts/visualize.py"
+echo "  2. Test with random actions: python piper_sim/scripts/random_agent.py"
+echo "  3. Train:                 python piper_sim/scripts/train.py"
+echo ""

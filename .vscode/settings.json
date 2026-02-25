@@ -1,0 +1,35 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll": "explicit"
+    }
+  },
+  "ruff.enable": true,
+  "ruff.organizeImports": true,
+  "ruff.fixAll": true,
+  "basedpyright.analysis.typeCheckingMode": "basic",
+  "basedpyright.analysis.diagnosticMode": "workspace",
+  "basedpyright.analysis.logLevel": "Information",
+  "basedpyright.analysis.autoImportCompletions": true,
+  "basedpyright.analysis.extraPaths": [
+    "${workspaceFolder}/piper_sim"
+  ],
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/piper_sim"
+  ],
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/*.egg-info": true,
+    "**/build": true,
+    "**/dist": true
+  },
+  "search.exclude": {
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/*.egg-info": true
+  }
+}

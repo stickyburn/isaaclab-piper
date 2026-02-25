@@ -1,0 +1,33 @@
+[package]
+version = "0.1.0"
+title = "Piper sim with newton"
+description = "Isaac Lab extension for Piper arm simulation"
+repository = "https://github.com/stickyburn/isaac-projects"
+category = "robotics"
+
+[python.pipapi]
+requirements = [
+    "isaaclab",
+    "isaaclab_newton",
+    "numpy",
+    "torch",
+    "gymnasium>=0.29.0",
+    "prettytable>=3.3.0",
+    "warp-lang>=1.0.0",
+    "newton",
+    "mujoco>=3.4.0",
+    "mujoco-warp",
+]
+
+modules = [
+    "isaaclab",
+    "isaaclab_newton", 
+    "numpy",
+    "torch",
+    "gymnasium",
+    "prettytable",
+    "warp",
+    "newton",
+    "mujoco",
+    "mujoco_warp",
+]

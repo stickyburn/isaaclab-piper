@@ -8,9 +8,9 @@ repository = "https://github.com/stickyburn/isaac-projects"
 requirements = [
     "isaaclab",
     "isaaclab_newton",
-    "numpy",
-    "torch",
-    "gymnasium>=0.29.0",
+    "numpy>=2",
+    "torch>=2.7",
+    "gymnasium>=1.2.0",
     "prettytable>=3.3.0",
     "warp-lang>=1.0.0",
     "newton",

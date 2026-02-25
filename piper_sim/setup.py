@@ -14,9 +14,9 @@ EXTENSION_TOML_DATA = toml.load(os.path.join(EXTENSION_PATH, "source/piper_sim/c
 INSTALL_REQUIRES = [
     "isaaclab",
     "isaaclab_newton",
-    "numpy<2",
+    "numpy>=2",
     "torch>=2.7",
-    "gymnasium==0.29.0",
+    "gymnasium>=1.2.0",
     "prettytable==3.3.0",
     "toml",
     "warp-lang>=1.0.0",

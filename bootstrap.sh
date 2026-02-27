@@ -11,22 +11,29 @@ ASSETS_ZIP_NAME="piper_sim_assets.zip"
 
 echo "Repo root: ${REPO_ROOT}"
 
-# check IsaacLab
-if ! python - <<'PY'
-import importlib.util
-raise SystemExit(0 if importlib.util.find_spec("isaaclab") else 1)
-PY
-then
-  if [[ -f "/opt/isaaclab-env/bin/activate" ]]; then
-    source "/opt/isaaclab-env/bin/activate"
-    echo "Activated Isaac Lab venv."
+# use conda installed by docker
+if [[ -z "${CONDA_PREFIX:-}" ]]; then
+  if [[ -d "/opt/conda" ]]; then
+    echo "Activating conda environment..."
+    source /opt/conda/etc/profile.d/conda.sh
+    conda activate base
+    echo "Activated conda base environment."
   else
-    echo "Isaac Lab venv not active and activation script not found." >&2
+    echo "ERROR: Conda not found at /opt/conda and CONDA_PREFIX not set" >&2
     exit 1
   fi
 fi
 
-echo "Installing piper_sim as an Isaac Lab extension (editable)."
+# check isaaclab
+if ! python -c "import isaaclab" 2>/dev/null; then
+  echo "ERROR: IsaacLab not found after environment activation" >&2
+  exit 1
+fi
+
+echo "Using Python: $(which python)"
+echo "Python version: $(python --version)"
+
+echo "Installing as an extension (editable)."
 python -m pip install -e "${REPO_ROOT}/piper_sim"
 
 # create dirs
@@ -56,10 +63,7 @@ rm -rf "${DOWNLOADS_DIR}" 2>/dev/null || true
 echo ""
 echo "✓ Setup complete!"
 echo ""
-echo "Assets installed to: ${ASSETS_DIR}"
-echo ""
 echo "You can now:"
 echo "  1. Visualize the scene:   python piper_sim/scripts/visualize.py"
-echo "  2. Test with random actions: python piper_sim/scripts/random_agent.py"
 echo "  3. Train:                 python piper_sim/scripts/train.py"
 echo ""

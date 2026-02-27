@@ -1,0 +1,165 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "piper_sim"
+version = "0.1.0"
+description = "Piper Arm Simulation with Newton Physics - IsaacLab extension"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+keywords = ["robotics", "simulation", "isaaclab", "newton"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "isaaclab",
+    "isaaclab_newton",
+    "numpy>=2",
+    "torch>=2.7",
+    "gymnasium>=1.2.0",
+    "prettytable==3.3.0",
+    "toml",
+    "warp-lang>=1.0.0",
+    "newton",
+    "mujoco>=3.4.0",
+    "mujoco-warp",
+    "rerun-sdk",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.3.0", "basedpyright>=1.12.0"]
+
+[project.entry-points."gymnasium.envs"]
+"Piper-Shelf-v0" = "piper_sim.envs:TaskEnvironment"
+"Piper-Shelf-Play-v0" = "piper_sim.envs:TaskEnvironmentPlay"
+
+[tool.setuptools]
+packages = ["piper_sim"]
+package-dir = { piper_sim = "source/piper_sim" }
+zip-safe = false
+
+[tool.setuptools.package-data]
+piper_sim = ["config/*"]
+
+# ruff instead of flake8
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+indent-width = 4
+
+exclude = [
+    "_isaac_sim",
+    ".git",
+    ".ruff_cache",
+    ".vscode",
+    "__pycache__",
+    "docs",
+    "logs",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "D", "UP", "B", "C4", "SIM", "RUF"]
+
+ignore = [
+    "E402",
+    "E501",
+    "E203",
+    "D401",
+    "RUF012",
+    "SIM102",
+    "SIM117",
+    "SIM118",
+    "RUF013",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["*MDP*", "*Cfg"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 120
+
+[tool.ruff.lint.isort]
+known-first-party = ["piper_sim", "isaaclab", "isaaclab_newton"]
+known-third-party = [
+    "isaacsim.core.api",
+    "isaacsim.replicator.common",
+    "omni.replicator.core",
+    "pxr",
+    "omni.kit",
+    "carb",
+    "warp",
+    "numpy",
+    "torch",
+    "gymnasium",
+    "newton",
+    "mujoco",
+    "rerun",
+]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+combine-as-imports = true
+split-on-trailing-comma = true
+lines-after-imports = 2
+
+# basedpyright
+[tool.basedpyright]
+include = ["source"]
+exclude = [
+    "**/__pycache__",
+    "**/_isaac_sim",
+    "**/docs",
+    "**/logs",
+    ".git",
+    ".vscode",
+    ".ruff_cache",
+    "**/build",
+    "**/dist",
+    "**/*.egg-info",
+]
+
+typeCheckingMode = "basic"
+pythonVersion = "3.11"
+pythonPlatform = "Linux"
+enableTypeIgnoreComments = true
+reportMissingImports = "none"
+reportMissingModuleSource = "none"
+reportGeneralTypeIssues = "none"
+reportOptionalMemberAccess = "warning"
+reportPrivateUsage = "warning"
+reportUnusedImport = "warning"
+reportUnusedVariable = "warning"
+
+# codespell
+[tool.codespell]
+skip = "*.usd,*.svg,*.png,_isaac_sim*,*.bib,*.css,*/_build"
+quiet-level = 0
+ignore-words-list = "haa,slq,collapsable,buss"

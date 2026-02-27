@@ -31,5 +31,8 @@
     "**/__pycache__": true,
     "**/.ruff_cache": true,
     "**/*.egg-info": true
-  }
+  },
+  "cursorpyright.analysis.extraPaths": [
+    "${workspaceFolder}/piper_sim"
+  ]
 }

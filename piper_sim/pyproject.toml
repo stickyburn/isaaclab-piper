@@ -11,29 +11,27 @@ requires-python = ">=3.10"
 license = { text = "BSD-3-Clause" }
 keywords = ["robotics", "simulation", "isaaclab", "newton"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "License :: OSI Approved :: BSD License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 
 dependencies = [
-    "isaaclab",
-    "isaaclab_newton",
-    "numpy>=2",
-    "torch>=2.7",
-    "gymnasium>=1.2.0",
-    "prettytable==3.3.0",
-    "toml",
-    "warp-lang>=1.0.0",
-    "newton",
-    "mujoco>=3.4.0",
-    "mujoco-warp",
-    "rerun-sdk",
+  "isaaclab",
+  "isaaclab_newton",
+  "numpy>=2",
+  "torch>=2.7",
+  "gymnasium>=1.2.0",
+  "prettytable==3.3.0",
+  "toml",
+  "warp-lang>=1.0.0",
+  "newton",
+  "mujoco>=3.4.0",
+  "mujoco-warp",
+  "rerun-sdk",
 ]
 
 [project.optional-dependencies]
@@ -58,31 +56,31 @@ line-length = 120
 indent-width = 4
 
 exclude = [
-    "_isaac_sim",
-    ".git",
-    ".ruff_cache",
-    ".vscode",
-    "__pycache__",
-    "docs",
-    "logs",
-    "build",
-    "dist",
-    "*.egg-info",
+  "_isaac_sim",
+  ".git",
+  ".ruff_cache",
+  ".vscode",
+  "__pycache__",
+  "docs",
+  "logs",
+  "build",
+  "dist",
+  "*.egg-info",
 ]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "N", "D", "UP", "B", "C4", "SIM", "RUF"]
 
 ignore = [
-    "E402",
-    "E501",
-    "E203",
-    "D401",
-    "RUF012",
-    "SIM102",
-    "SIM117",
-    "SIM118",
-    "RUF013",
+  "E402",
+  "E501",
+  "E203",
+  "D401",
+  "RUF012",
+  "SIM102",
+  "SIM117",
+  "SIM118",
+  "RUF013",
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -105,26 +103,26 @@ docstring-code-line-length = 120
 [tool.ruff.lint.isort]
 known-first-party = ["piper_sim", "isaaclab", "isaaclab_newton"]
 known-third-party = [
-    "isaacsim.core.api",
-    "isaacsim.replicator.common",
-    "omni.replicator.core",
-    "pxr",
-    "omni.kit",
-    "carb",
-    "warp",
-    "numpy",
-    "torch",
-    "gymnasium",
-    "newton",
-    "mujoco",
-    "rerun",
+  "isaacsim.core.api",
+  "isaacsim.replicator.common",
+  "omni.replicator.core",
+  "pxr",
+  "omni.kit",
+  "carb",
+  "warp",
+  "numpy",
+  "torch",
+  "gymnasium",
+  "newton",
+  "mujoco",
+  "rerun",
 ]
 section-order = [
-    "future",
-    "standard-library",
-    "third-party",
-    "first-party",
-    "local-folder",
+  "future",
+  "standard-library",
+  "third-party",
+  "first-party",
+  "local-folder",
 ]
 combine-as-imports = true
 split-on-trailing-comma = true
@@ -134,16 +132,16 @@ lines-after-imports = 2
 [tool.basedpyright]
 include = ["source"]
 exclude = [
-    "**/__pycache__",
-    "**/_isaac_sim",
-    "**/docs",
-    "**/logs",
-    ".git",
-    ".vscode",
-    ".ruff_cache",
-    "**/build",
-    "**/dist",
-    "**/*.egg-info",
+  "**/__pycache__",
+  "**/_isaac_sim",
+  "**/docs",
+  "**/logs",
+  ".git",
+  ".vscode",
+  ".ruff_cache",
+  "**/build",
+  "**/dist",
+  "**/*.egg-info",
 ]
 
 typeCheckingMode = "basic"

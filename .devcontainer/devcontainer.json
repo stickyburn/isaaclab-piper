@@ -1,5 +1,5 @@
 {
-  "name": "Isaac Pod Development",
+  "name": "Isaac Pod",
   "build": {
     "dockerfile": "../../isaac-pod/Dockerfile.dev",
     "context": "../../isaac-pod"

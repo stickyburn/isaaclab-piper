@@ -13,7 +13,7 @@ def main():
     parser.add_argument(
         "--task",
         type=str,
-        default="Isaac-Piper-Basic-Play-v0",
+        default="Piper-Shelf-v0",
         help="Task to visualize",
     )
     parser.add_argument("--num_envs", type=int, default=1, help="Number of environments")

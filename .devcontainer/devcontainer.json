@@ -9,11 +9,6 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "python.analysis.exclude": [
-          "**/site-packages"
-        ],
-        "python.analysis.typeCheckingMode": "basic",
-        "python.analysis.autoImportCompletions": true,
         "ruff.enable": true,
         "ruff.organizeImports": true,
         "ruff.fixAll": true,
@@ -29,7 +24,8 @@
         "basedpyright.analysis.autoImportCompletions": true,
         "basedpyright.analysis.extraPaths": [
           "/workspace/piper_sim",
-          "/opt/IsaacLab/source/isaaclab"
+          "/opt/IsaacLab/source/isaaclab",
+          "/usr/local/lib/python3.10/site-packages"
         ],
         "files.exclude": {
           "**/__pycache__": true,
@@ -40,7 +36,7 @@
         }
       },
       "extensions": [
-        "ms-python.python",
+        "detachhead.basedpyright",
         "charliermarsh.ruff"
       ]
     }

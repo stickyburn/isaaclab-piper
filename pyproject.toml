@@ -1,5 +1,5 @@
 [project]
-name = "auto-shelf-sim"
+name = "isaaclab-piper"
 version = "0.1.0"
 description = "Isaaclab extension for training Piper arm"
 readme = "README.md"
@@ -10,7 +10,6 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
 ]
 

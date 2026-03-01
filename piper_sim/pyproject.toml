@@ -37,10 +37,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "ruff>=0.3.0", "basedpyright>=1.12.0"]
 
-[project.entry-points."gymnasium.envs"]
-"Piper-Shelf-v0" = "piper_sim.envs:TaskEnvironment"
-"Piper-Shelf-Play-v0" = "piper_sim.envs:TaskEnvironmentPlay"
-
 [tool.setuptools]
 packages = ["piper_sim"]
 package-dir = { piper_sim = "source/piper_sim" }
